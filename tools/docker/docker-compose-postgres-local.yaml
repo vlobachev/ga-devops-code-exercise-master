@@ -1,0 +1,12 @@
+version: '3.0'
+services:
+  # PostgreSQL 11.5
+  postgres-db:
+    container_name: "postgres_engine"
+    restart: "always"
+    image: postgres
+    volumes:
+      - ./postgres_volume:/var/lib/postgresql/data/
+      - ./services/postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432

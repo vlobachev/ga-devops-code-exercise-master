@@ -1,0 +1,5 @@
+tools/docker/postgres_volume/
+verify_data_devops.log
+*.xml
+.idea/
+.idea

@@ -1,0 +1,9 @@
+version: '3.0'
+services:
+  # metabase
+  metabase:
+    container_name: "metabase_engine"
+    restart: "always"
+    image: metabase/metabase
+    ports:
+      - 3000:3000
