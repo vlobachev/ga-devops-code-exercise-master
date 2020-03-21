@@ -1,0 +1,55 @@
+version: '3.0'
+
+networks:
+  web:
+    external: true
+  internal:
+    external: false
+
+services:
+  postgres-db:
+    image: postgres
+    container_name: "${PROJECT_NAME}_${STAGE}_postgres-db"
+    volumes:
+      - /mnt/postgres_volume:/var/lib/postgresql/data/
+      - ./tools/docker/services/postgres/:/docker-entrypoint-initdb.d/
+    restart: "always"
+    env_file:
+      - ./tools/docker/config/postgres.env
+    networks:
+      - internal
+    stop_grace_period: 20s
+
+  metabase:
+    container_name: "${PROJECT_NAME}_${STAGE}_metabase"
+    restart: "always"
+    image: metabase/metabase
+    ports:
+      - 3000:3000
+    env_file:
+      - ./tools/docker/config/metabase_database.env
+    environment:
+      MB_DB_HOST: "${PROJECT_NAME}_${STAGE}_postgres-db"
+    networks:
+      - internal
+      - web
+    depends_on:
+      - postgres-db
+    stop_grace_period: 20s
+
+  runner:
+    container_name: "${PROJECT_NAME}_${STAGE}_runner"
+    image: ga-devops-code-exercise-master/project
+    env_file:
+      - .env
+    environment:
+      HOST:  "${PROJECT_NAME}_${STAGE}_postgres-db"
+    depends_on:
+      - postgres-db
+      - metabase
+    stop_grace_period: 10s
+    volumes:
+      - ./:/src/
+    networks:
+      - web
+      - internal
