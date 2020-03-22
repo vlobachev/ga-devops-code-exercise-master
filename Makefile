@@ -11,11 +11,14 @@ endif
 
 VERSION ?= $(shell git describe --tags --always)
 
-.PHONY: deps run_write_db self_run_write_db verify_data_db self_verify_data_db up down start stop docker-build-image docker-ssh docker-push docker-login test
+.PHONY: help docker-init deps run_write_db self_run_write_db verify_data_db self_verify_data_db up down start stop docker-build-image docker-ssh docker-push docker-login test
 
 ## help:			Print commands help.0
 help: Makefile
 	@sed -n 's/^##//p' $<
+
+## docker-init:		Build and push container to registry.
+docker-init: docker-build-image docker-push
 
 ## deps:			Install deps by pipenv
 deps:

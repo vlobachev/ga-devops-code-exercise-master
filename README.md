@@ -4,8 +4,12 @@
 1. Clone this repo in github to your account
 2. Clone to your local developer environment.
 3. Change "GITHUB_ACCOUNT" in .env to your.
-4. For local use look at "> make help".
-5. For automation build, test and deploymet follow next steps:
+4. set global variable "GITHUB_TOKEN" - get it from your Github account
+   - > export GITHUB_TOKEN=ecedfa7234588b26c512345212534b67542a
+5. For local use look at "> make help".
+   - First run:make docker-init - it will build and push container to
+     registry.
+6. For automation build, test and deploymet follow next steps:
    1. Crete account in https://travis-ci.com/
    2. Connect your Github account and turn on Travis on this repo.
    3. Set "GITHUB_TOKEN" variable see: "More options > Settings >
