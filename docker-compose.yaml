@@ -1,8 +1,6 @@
 version: '3.0'
 
 networks:
-  web:
-    external: true
   internal:
     external: false
 
@@ -13,14 +11,11 @@ services:
     volumes:
       - /mnt/postgres_volume:/var/lib/postgresql/data/
       - ./tools/docker/services/postgres/:/docker-entrypoint-initdb.d/
-    ports:
-      - 5432:5432
     restart: "always"
     env_file:
       - ./tools/docker/config/postgres.env
     networks:
       - internal
-      - web
     stop_grace_period: 20s
 
   metabase:
@@ -35,7 +30,7 @@ services:
       MB_DB_HOST: "${PROJECT_NAME}_${STAGE}_postgres-db"
     networks:
       - internal
-      - web
+      - default
     depends_on:
       - postgres-db
     stop_grace_period: 20s
@@ -54,5 +49,4 @@ services:
     volumes:
       - ./:/src/
     networks:
-      - web
       - internal
