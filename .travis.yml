@@ -10,6 +10,7 @@ env:
 jobs:
   include:
     - stage: build docker image
+      if: $CONTAINER_RELEASE = 1
       script:
         - set -e
         - make docker-build-image
@@ -23,6 +24,7 @@ deploy:
   provider: script
   script: make docker-push
   on:
+    tags: true
     branch: master
     condition: $CONTAINER_RELEASE=1
 
@@ -35,6 +37,7 @@ deploy:
   file:
   - ga-devops-code-exercise-master.tar.gz
   on:
+    tags: true
     condition: $GITHUB_RELEASE = 1
 
 notifications:
