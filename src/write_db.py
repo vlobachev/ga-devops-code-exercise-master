@@ -28,7 +28,7 @@ def insert_data(conn, schema, table, data) -> None:
 
 
 def main() -> None:
-    data = (randint(1, 1000), 'This', 'is', 'a', 'ga', 'devops', 'exercise')
+    data = (randint(1, 100000), 'This', 'is', 'a', 'ga', 'devops', 'exercise')
     insert_data(conn=get_conn(), schema=SCHEMA, table=TABLE, data=data)
 
 

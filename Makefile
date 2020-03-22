@@ -63,7 +63,7 @@ docker-push: docker-build-image docker-login
 	docker push docker.pkg.github.com/${DOCKER_ACCOUNT}/${CONTAINER-PYTHON}:latest
 
 docker-login:
-	docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+	echo ${DOCKER_TOKEN} | docker login docker.pkg.github.com -u ${DOCKER_ACCOUNT} --password-stdin
 
 docker-build-deps: docker-build-image
 	@echo "Runing docker container..."

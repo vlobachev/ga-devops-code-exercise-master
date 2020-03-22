@@ -7,11 +7,27 @@ env:
   matrix:
   - DEVOPS_VER=1.0 GITHUB_RELEASE=1
 
-script:
-- set -e
-- make test
-- ls
-- tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
+jobs:
+  include:
+    - stage: build docker image
+      script:
+        - set -e
+        - make docker-build-image
+    - stage: test
+      script:
+        - make test
+    - stage: prepere for deploy
+      script:
+        - set -e
+        - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
+
+deploy:
+  provider: script
+  script: make docker-push
+  on:
+    tags: true
+    branch: master
+    condition: $GITHUB_RELEASE = 1
 
 deploy:
   provider: releases

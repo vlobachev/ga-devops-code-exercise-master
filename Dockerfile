@@ -3,24 +3,14 @@ RUN yum update -y
 RUN yum install -y \
     git \
     mc  \
-    aws-cli \
     zip \
-    gcc \
     make \
-    libffi-devel \
-    openssl-devel \
-    zlib-devel \
-    libffi-devel \
     which \
+    python37 \
+    python \
+    python3-pip \
     wget && \
     yum -y clean all
-
-RUN yum -y install python37 \
-    python \
-    python3-devel \
-    python-devel \
-    python3-pip \
-    && yum clean all
 
 RUN python3 -m pip install --upgrade pip \
     && python3 -m pip install pipenv
@@ -37,6 +27,6 @@ COPY Pipfile.lock Pipfile.lock
 # -- Install dependencies:
 RUN set -ex && pipenv sync --dev --python 3.7
 
-#RUN echo -n $(git ls-files -s lambdas/requirements.txt | git hash-object --stdin)
+
 
 
