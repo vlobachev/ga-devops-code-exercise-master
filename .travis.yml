@@ -11,10 +11,17 @@ if: tag IS present
 
 jobs:
   include:
-    - stage: build docker image
+    - stage: build docker image / TEST
+      if: ENV(CONTAINER_RELEASE) = 1
       script:
         - set -e
         - make docker-build-image
+        - make test
+        - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
+    - stage: TEST
+      if: ENV(CONTAINER_RELEASE) != 1
+      script:
+        - set -e
         - make test
         - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
 
