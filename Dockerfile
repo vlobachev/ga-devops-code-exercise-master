@@ -35,10 +35,8 @@ COPY Pipfile Pipfile
 COPY Pipfile.lock Pipfile.lock
 
 # -- Install dependencies:
-RUN set -ex && pipenv install --dev --python 3.7
+RUN set -ex && pipenv sync --dev --python 3.7
 
-#RUN yum -y install make
-#
 #RUN echo -n $(git ls-files -s lambdas/requirements.txt | git hash-object --stdin)
 
 

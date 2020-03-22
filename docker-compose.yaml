@@ -13,11 +13,14 @@ services:
     volumes:
       - /mnt/postgres_volume:/var/lib/postgresql/data/
       - ./tools/docker/services/postgres/:/docker-entrypoint-initdb.d/
+    ports:
+      - 5432:5432
     restart: "always"
     env_file:
       - ./tools/docker/config/postgres.env
     networks:
       - internal
+      - web
     stop_grace_period: 20s
 
   metabase:
