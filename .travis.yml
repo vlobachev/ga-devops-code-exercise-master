@@ -32,8 +32,6 @@ deploy:
     tags: true
     branch: master
     condition: $CONTAINER_RELEASE = 1
-
-deploy:
 - provider: releases
   api_key: $GITHUB_TOKEN
   overwrite: true
