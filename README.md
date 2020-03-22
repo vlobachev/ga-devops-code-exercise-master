@@ -9,6 +9,9 @@
 5. For local use look at "> make help".
    - First run:make docker-init - it will build and push container to
      registry.
+   - localhost:3000 you will find Metabase
+   - for connecting to DB loock at container name: '> docker ps' by
+     default it is "devops_dev_postgres-db"
 6. For automation build, test and deploymet follow next steps:
    1. Crete account in https://travis-ci.com/
    2. Connect your Github account and turn on Travis on this repo.
