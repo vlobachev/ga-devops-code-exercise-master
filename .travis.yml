@@ -16,14 +16,16 @@ jobs:
         - make docker-build-image
     - stage: test
       script:
-      - make test
       - set -e
-      - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
+      - make test
     - stage: deploy builded docker-container
       if: env(CONTAINER_RELEASE) =1
       script:
         - set -e
         - make docker-push
+    - stage: prepere for code deploy ro github
+      script:
+        - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
 
 deploy:
   provider: releases

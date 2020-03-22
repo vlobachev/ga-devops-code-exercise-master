@@ -1,7 +1,7 @@
 #!make
 default: up
 
-CONTAINER-PYTHON-FULLNAME = "docker.pkg.github.com/${GITHUB_ACCOUNT}/${CONTAINER-PYTHON}"
+CONTAINER-PYTHON-FULLNAME = docker.pkg.github.com/${GITHUB_ACCOUNT}/${CONTAINER-PYTHON}
 ENVFILE = ${CURDIR}/.env
 
 ifneq ("$(wildcard $(ENVFILE))","")
@@ -80,4 +80,4 @@ test: docker-login
 	docker-compose up -d
 	docker-compose run runner make -C /src self_run_write_db
 	docker-compose run runner make -C /src self_verify_data_db
-	docker-compose down
+	docker-compose stop
