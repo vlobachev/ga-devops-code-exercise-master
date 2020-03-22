@@ -11,7 +11,7 @@ script:
 - set -e
 - make test
 - ls
-- tar -czf ga-devops-code-exercise-master.tar.gz .
+- tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
 
 deploy:
   provider: releases
