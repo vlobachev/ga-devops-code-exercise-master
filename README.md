@@ -1,5 +1,5 @@
 # ga-devops-code-exercise
-
+ [![Build Status](https://travis-ci.com/vlobachev/ga-devops-code-exercise-master.svg?branch=master)](https://travis-ci.com/vlobachev/ga-devops-code-exercise-master)
 #### DevOps coding solution
 1. Clone this repo in github to your account
 2. Clone to your local developer environment.
@@ -14,4 +14,4 @@
       - change recipients, to get e-mail notifications.
    5. Create tag in you repo and PUSH - Travis will automatically pull,
       build, test and deploy app.
-   6. 
+   6. Important! BUILDS JUST ON NEW TAG.
