@@ -37,7 +37,7 @@ services:
 
   runner:
     container_name: "${PROJECT_NAME}_${STAGE}_runner"
-    image: ga-devops-code-exercise-master/project
+    image: docker.pkg.github.com/vlobachev/ga-devops-code-exercise-master/project:latest
     env_file:
       - .env
     environment:

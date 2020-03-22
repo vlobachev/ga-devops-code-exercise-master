@@ -56,21 +56,21 @@ docker-build-image:
 docker-ssh: docker-build-image
 	docker run --rm -it -v "${CURDIR}":/src ${CONTAINER-PYTHON} bash
 
-docker-push: docker-build-image docker-login
-	docker tag ${CONTAINER-PYTHON} docker.pkg.github.com/${DOCKER_ACCOUNT}/${CONTAINER-PYTHON}:latest
-	docker tag ${CONTAINER-PYTHON} docker.pkg.github.com/${DOCKER_ACCOUNT}/${CONTAINER-PYTHON}:${VERSION}
-	docker push docker.pkg.github.com/${DOCKER_ACCOUNT}/${CONTAINER-PYTHON}:${VERSION}
-	docker push docker.pkg.github.com/${DOCKER_ACCOUNT}/${CONTAINER-PYTHON}:latest
+docker-push: docker-login
+	docker tag ${CONTAINER-PYTHON} docker.pkg.github.com/${GITHUB_ACCOUNT}/${CONTAINER-PYTHON}:latest
+	docker tag ${CONTAINER-PYTHON} docker.pkg.github.com/${GITHUB_ACCOUNT}/${CONTAINER-PYTHON}:${VERSION}
+	docker push docker.pkg.github.com/${GITHUB_ACCOUNT}/${CONTAINER-PYTHON}:${VERSION}
+	docker push docker.pkg.github.com/${GITHUB_ACCOUNT}/${CONTAINER-PYTHON}:latest
 
 docker-login:
-	echo ${DOCKER_TOKEN} | docker login docker.pkg.github.com -u ${DOCKER_ACCOUNT} --password-stdin
+	echo ${GITHUB_TOKEN} | docker login docker.pkg.github.com -u ${GITHUB_ACCOUNT} --password-stdin
 
 docker-build-deps: docker-build-image
 	@echo "Runing docker container..."
 	docker run --rm -v "${CURDIR}":/src ${CONTAINER-PYTHON} make -C /src deps
 	@echo "Docker container stoped and removed."
 
-test: docker-build-image
+test: docker-login
 	docker-compose up -d
 	docker-compose run runner make -C /src self_run_write_db
 	docker-compose run runner make -C /src self_verify_data_db

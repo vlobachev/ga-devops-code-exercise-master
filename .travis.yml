@@ -15,11 +15,27 @@ jobs:
         - make docker-build-image
     - stage: test
       script:
-        - make test
-    - stage: prepere for deploy
-      script:
-        - set -e
-        - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
+      - make test
+      - set -e
+      - tar -czf ga-devops-code-exercise-master.tar.gz docker-compose.yaml  Makefile  Pipfile.lock  src Dockerfile Pipfile README.md tools .travis.yml .env .gitignore
+
+deploy:
+  provider: script
+  script: make docker-push
+  on:
+    branch: master
+    condition: $CONTAINER_RELEASE=1
+
+deploy:
+  provider: releases
+  api_key: $GITHUB_TOKEN
+  overwrite: true
+  skip_cleanup: true
+  file_glob: true
+  file:
+  - ga-devops-code-exercise-master.tar.gz
+  on:
+    condition: $GITHUB_RELEASE = 1
 
 notifications:
   email:
