@@ -31,7 +31,7 @@ deploy:
 
 deploy:
   provider: releases
-  api_key: $GITHUB_ACCESS_TOKEN
+  api_key: $GITHUB_TOKEN
   overwrite: true
   skip_cleanup: true
   file_glob: true
