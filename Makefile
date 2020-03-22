@@ -73,7 +73,7 @@ docker-build-deps: docker-build-image
 network-create:
 	docker network create web
 
-test: network-create
+test: network-create docker-build-image
 	docker-compose up -d
 	docker-compose exec runner make -C /src self_run_write_db
 	docker-compose exec runner make -C /src self_verify_data_db
