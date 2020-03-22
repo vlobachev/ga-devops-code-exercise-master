@@ -28,7 +28,7 @@ verify_data_db: docker-build-image
 self_verify_data_db:
 	pipenv run python3 src/verify_data_devops.py
 
-up:
+up: network-create
 	@echo "Starting up containers for $(PROJECT_NAME)..."
 	docker-compose pull
 	docker-compose up -d --remove-orphans
@@ -70,7 +70,10 @@ docker-build-deps: docker-build-image
 	docker run --rm -v "${CURDIR}":/src ${CONTAINER-PYTHON} make -C /src deps
 	@echo "Docker container stoped and removed."
 
-test:
+network-create:
+	docker network create web
+
+test: network-create
 	docker-compose up -d
 	docker-compose exec runner make -C /src self_run_write_db
 	docker-compose exec runner make -C /src self_verify_data_db
