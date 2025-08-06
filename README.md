@@ -5,7 +5,7 @@
 2. Clone to your local developer environment.
 3. Change "GITHUB_ACCOUNT" in .env to your.
 4. set global variable "GITHUB_TOKEN" - get it from your Github account
-   - > export GITHUB_TOKEN=ecedfa7234588b26c512345212534b67542a
+   - > export GITHUB_TOKEN=token
 5. For local use look at "> make help".
    - First run:make docker-init - it will build and push container to
      registry.
